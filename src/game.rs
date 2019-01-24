@@ -22,17 +22,72 @@
 * SOFTWARE.
 */
 
+pub trait GameState {
+    fn update(&mut self);
+}
+
 pub struct Game {
+    state_stack: Vec<Box<dyn GameState>>
 }
 
 impl Game {
-    pub fn new() -> Game {
-        Game {}
+    pub fn new(initial_state: Box<dyn GameState>) -> Game {
+        Game {
+            state_stack: vec!(initial_state)
+        }
     }
 
     pub fn run(&mut self) {
+        println!("Game started");
+
         loop {
-            println!("The game is running");
+            if self.state_stack.is_empty() {
+                break;
+            }
+
+            self.state_stack.last_mut().expect("State stack is empty").update();
+        }
+
+        println!("Game stopped");
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    struct DummyState;
+
+    impl GameState for DummyState {
+        fn update(&mut self) {}
+    }
+
+    struct IncrementState {
+        value: u32
+    }
+
+    impl GameState for IncrementState {
+        fn update(&mut self) {
+            self.value += 1;
         }
     }
+
+    #[test]
+    fn new_game() {
+        let game = Game::new(Box::new(DummyState {}));
+        assert_eq!(game.state_stack.len(), 1);
+    }
+
+    #[test]
+    fn update_game_state() {
+        let mut game_state = IncrementState { value: 0 };
+        game_state.update();
+        assert_eq!(game_state.value, 1);
+        game_state.update();
+        assert_eq!(game_state.value, 2);
+        game_state.update();
+        assert_eq!(game_state.value, 3);
+    }
+
+
 }
