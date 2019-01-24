@@ -37,6 +37,7 @@ impl Game {
         }
     }
 
+    /// Starts the main loop of the game
     pub fn run(&mut self) {
         println!("Game started");
 
@@ -88,6 +89,4 @@ mod tests {
         game_state.update();
         assert_eq!(game_state.value, 3);
     }
-
-
 }
