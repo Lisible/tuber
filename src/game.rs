@@ -22,18 +22,22 @@
 * SOFTWARE.
 */
 
+use window::{Window, Headless};
+
 pub trait GameState {
     fn update(&mut self);
 }
 
 pub struct Game {
-    state_stack: Vec<Box<dyn GameState>>
+    state_stack: Vec<Box<dyn GameState>>,
+    window: Box<dyn Window>,
 }
 
 impl Game {
-    pub fn new(initial_state: Box<dyn GameState>) -> Game {
+    pub fn new(initial_state: Box<dyn GameState>, window: Box<dyn Window>) -> Game {
         Game {
-            state_stack: vec!(initial_state)
+            state_stack: vec!(initial_state),
+            window,
         }
     }
 
@@ -45,6 +49,8 @@ impl Game {
             if self.state_stack.is_empty() {
                 break;
             }
+
+            let event = self.window.poll_event();
 
             self.state_stack.last_mut().expect("State stack is empty").update();
         }
@@ -75,7 +81,7 @@ mod tests {
 
     #[test]
     fn new_game() {
-        let game = Game::new(Box::new(DummyState {}));
+        let game = Game::new(Box::new(DummyState {}), Box::new(Headless));
         assert_eq!(game.state_stack.len(), 1);
     }
 

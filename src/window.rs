@@ -22,23 +22,28 @@
 * SOFTWARE.
 */
 
-extern crate tuber;
-
-use tuber::game::{Game, GameState};
-use tuber::window::Headless;
-
-struct ExampleState {
-    val: i32
+pub enum WindowEvent {
+    Close,
+    None
 }
 
-impl GameState for ExampleState {
-    fn update(&mut self) {
-        println!("{}", self.val);
-        self.val += 1;
+pub trait Window {
+    /// Shows the window on the screen
+    fn show(&mut self);
+    /// Hides the window from the screen
+    fn hide(&mut self);
+
+    /// Polls an event from the window's event loop
+    fn poll_event(&mut self) -> WindowEvent;
+}
+
+pub struct Headless;
+
+impl Window for Headless {
+    fn show(&mut self) {}
+    fn hide(&mut self) {}
+
+    fn poll_event(&mut self) -> WindowEvent {
+        WindowEvent::None
     }
-}
-
-fn main() {
-    let mut game = Game::new(Box::new(ExampleState { val: 0 }), Box::new(Headless));
-    game.run();
 }
