@@ -92,8 +92,8 @@ pub mod keyboard {
 
 pub mod mouse {
     pub enum Button {
-        LEFT,
-        RIGHT,
-        MIDDLE,
+        Left,
+        Right,
+        Middle,
     }
 }
