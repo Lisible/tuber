@@ -87,6 +87,7 @@ pub mod keyboard {
         LControl,
         RControl,
         Escape,
+        Unknown
     }
 }
 
@@ -95,5 +96,6 @@ pub mod mouse {
         Left,
         Right,
         Middle,
+        Unknown
     }
 }
