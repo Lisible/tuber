@@ -22,10 +22,7 @@
 * SOFTWARE.
 */
 
-pub enum WindowEvent {
-    Close,
-    None
-}
+use input::Input;
 
 pub trait Window {
     /// Shows the window on the screen
@@ -34,7 +31,7 @@ pub trait Window {
     fn hide(&mut self);
 
     /// Polls an event from the window's event loop
-    fn poll_event(&mut self) -> WindowEvent;
+    fn poll_event(&mut self) -> Input;
 }
 
 pub struct Headless;
@@ -43,7 +40,7 @@ impl Window for Headless {
     fn show(&mut self) {}
     fn hide(&mut self) {}
 
-    fn poll_event(&mut self) -> WindowEvent {
-        WindowEvent::None
+    fn poll_event(&mut self) -> Input {
+        Input::None
     }
 }

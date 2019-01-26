@@ -26,6 +26,7 @@ extern crate tuber;
 
 use tuber::game::{Game, GameState};
 use tuber::window::Headless;
+use tuber::input::InputListener;
 
 struct ExampleState {
     val: i32
@@ -37,6 +38,7 @@ impl GameState for ExampleState {
         self.val += 1;
     }
 }
+impl InputListener for ExampleState {}
 
 fn main() {
     let mut game = Game::new(Box::new(ExampleState { val: 0 }), Box::new(Headless));
