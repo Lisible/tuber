@@ -102,7 +102,7 @@ mod tests {
 
     #[test]
     fn new_game() {
-        let game = Game::new(Box::new(DummyState {}), Box::new(Headless));
+        let game = Game::new(Box::new(DummyState {}), Box::new(Headless::new()));
         assert_eq!(game.state_stack.len(), 1);
     }
 

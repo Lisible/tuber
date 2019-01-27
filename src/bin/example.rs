@@ -41,6 +41,6 @@ impl GameState for ExampleState {
 impl InputListener for ExampleState {}
 
 fn main() {
-    let mut game = Game::new(Box::new(ExampleState { val: 0 }), Box::new(Headless));
+    let mut game = Game::new(Box::new(ExampleState { val: 0 }), Box::new(Headless::new()));
     game.run();
 }
