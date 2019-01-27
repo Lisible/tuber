@@ -33,18 +33,14 @@ pub trait Window {
     /// Polls an event from the window's event loop
     fn poll_event(&mut self) -> Input;
 
-    fn graphics_context(&self) -> &Box<GraphicsContext>;
+    fn set_current_graphics_context(&self);
 }
 
-pub struct Headless {
-    graphics_context: Box<dyn GraphicsContext>
-}
+pub struct Headless;
 
 impl Headless {
     pub fn new() -> Headless {
-        Headless {
-            graphics_context: Box::new(NoGraphics)
-        }
+        Headless {}
     }
 }
 
@@ -56,23 +52,5 @@ impl Window for Headless {
         Input::None
     }
 
-    fn graphics_context(&self) -> &Box<dyn GraphicsContext> {
-        &self.graphics_context
-    }
-}
-
-pub trait GraphicsContext {
-    /// Sets this context as the current one
-    fn use_context(&self);
-}
-
-pub struct NoGraphics;
-impl NoGraphics {
-    pub fn new() -> NoGraphics {
-        NoGraphics {}
-    }
-}
-
-impl GraphicsContext for NoGraphics {
-    fn use_context(&self) {}
+    fn set_current_graphics_context(&self) {}
 }
