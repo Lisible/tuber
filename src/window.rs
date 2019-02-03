@@ -32,8 +32,11 @@ pub trait Window {
 
     /// Polls an event from the window's event loop
     fn poll_event(&mut self) -> Input;
-
+    
+    /// Sets the graphic context of the window as the current graphic context
     fn set_current_graphics_context(&self);
+    /// Displays the window content
+    fn display(&mut self);
 }
 
 pub struct Headless;
@@ -53,4 +56,5 @@ impl Window for Headless {
     }
 
     fn set_current_graphics_context(&self) {}
+    fn display(&mut self) {}
 }
