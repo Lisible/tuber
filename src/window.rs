@@ -39,6 +39,8 @@ pub trait Window {
     fn display(&mut self);
 }
 
+/// Used to create applications that doesn't use a window
+/// Especially useful for tests
 pub struct Headless;
 
 impl Headless {
