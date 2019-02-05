@@ -65,10 +65,11 @@ impl Game {
                 break;
             }
 
-            let input = self.window.poll_event();
             let current_state = self.state_stack.last_mut().expect("State stack is empty");
+            for input in self.window.poll_event() {
+                current_state.handle_input(input);
+            }
 
-            current_state.handle_input(input);
             current_state.update();
         }
 

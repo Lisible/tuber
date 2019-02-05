@@ -23,6 +23,7 @@
 */
 
 use input::Input;
+use std::iter::Iterator;
 
 pub trait Window {
     /// Shows the window on the screen
@@ -31,7 +32,7 @@ pub trait Window {
     fn hide(&mut self);
 
     /// Polls an event from the window's event loop
-    fn poll_event(&mut self) -> Input;
+    fn poll_event(&mut self) -> Box<Iterator<Item = Input>>;
     
     /// Sets the graphic context of the window as the current graphic context
     fn set_current_graphics_context(&self);
@@ -49,12 +50,22 @@ impl Headless {
     }
 }
 
+struct NoneIterator;
+
+impl Iterator for NoneIterator {
+    type Item = Input;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        Some(Input::None)
+    }
+}
+
 impl Window for Headless {
     fn show(&mut self) {}
     fn hide(&mut self) {}
 
-    fn poll_event(&mut self) -> Input {
-        Input::None
+    fn poll_event(&mut self) -> Box<Iterator<Item = Input>> {
+        Box::new(NoneIterator{})
     }
 
     fn set_current_graphics_context(&self) {}
