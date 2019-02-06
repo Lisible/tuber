@@ -38,7 +38,7 @@ pub trait GameState: InputListener {
             Input::MouseUp(button) => self.on_mouse_up(button),
             Input::MouseWheelChange(absolute, relative) =>
                 self.on_mouse_wheel_change(absolute, relative),
-            Input::None => (),
+            Input::Unknown => (),
         }
     }
 }

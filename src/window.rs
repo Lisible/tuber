@@ -56,7 +56,7 @@ impl Iterator for NoneIterator {
     type Item = Input;
 
     fn next(&mut self) -> Option<Self::Item> {
-        Some(Input::None)
+        Some(Input::Unknown)
     }
 }
 

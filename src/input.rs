@@ -37,7 +37,7 @@ pub enum Input {
     MouseUp(mouse::Button),
     /// Mouse wheel event
     MouseWheelChange(u32, i32),
-    None
+    Unknown
 }
 
 /// Trait for input listeners
