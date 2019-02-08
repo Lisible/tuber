@@ -22,6 +22,11 @@
 * SOFTWARE.
 */
 
+use std::collections::HashMap;
+
+pub mod keyboard;
+pub mod mouse;
+
 pub enum Input {
     /// Window close
     Close,
@@ -36,66 +41,5 @@ pub enum Input {
     /// Mouse button move
     MouseUp(mouse::Button),
     /// Mouse wheel event
-    MouseWheelChange(u32, i32),
-    None
-}
-
-/// Trait for input listeners
-pub trait InputListener {
-    fn on_close(&mut self){}
-    fn on_resize(&mut self, _width: u32, _height: u32){}
-    fn on_key_down(&mut self, _key: keyboard::Key){}
-    fn on_key_up(&mut self, _key: keyboard::Key){}
-    fn on_mouse_down(&mut self, _button: mouse::Button){}
-    fn on_mouse_up(&mut self, _button: mouse::Button){}
-    fn on_mouse_wheel_change(&mut self, _absolute: u32, _relative: i32){}
-}
-
-
-pub mod keyboard {
-    pub enum Key {
-        A,
-        B,
-        C,
-        D,
-        E,
-        F,
-        G,
-        H,
-        I,
-        J,
-        K,
-        L,
-        M,
-        N,
-        O,
-        P,
-        Q,
-        R,
-        S,
-        T,
-        U,
-        V,
-        W,
-        X,
-        Y,
-        Z,
-        Return,
-        Enter,
-        LShift,
-        RShift,
-        LControl,
-        RControl,
-        Escape,
-        Unknown
-    }
-}
-
-pub mod mouse {
-    pub enum Button {
-        Left,
-        Right,
-        Middle,
-        Unknown
-    }
+    MouseWheelChange(u32, i32)
 }
