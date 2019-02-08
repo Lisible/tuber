@@ -23,24 +23,11 @@
 */
 
 use window::Window;
-use input::*;
+use input::Input;
 
-pub trait GameState: InputListener {
-    fn update(&mut self);
-
-    fn handle_input(&mut self, input: Input) {
-        match input {
-            Input::Close => self.on_close(),
-            Input::Resize(width, height) => self.on_resize(width, height),
-            Input::KeyDown(key) => self.on_key_down(key),
-            Input::KeyUp(key) => self.on_key_up(key),
-            Input::MouseDown(button) => self.on_mouse_down(button),
-            Input::MouseUp(button) => self.on_mouse_up(button),
-            Input::MouseWheelChange(absolute, relative) =>
-                self.on_mouse_wheel_change(absolute, relative),
-            Input::None => (),
-        }
-    }
+pub trait GameState {
+    fn initialize(&mut self){}
+    fn update(&mut self){}
 }
 
 pub struct Game {
@@ -60,15 +47,14 @@ impl Game {
     pub fn run(&mut self) {
         println!("Game started");
 
-        loop {
-            if self.state_stack.is_empty() {
-                break;
+        'main_loop: loop {
+            if self.state_stack.is_empty() { break 'main_loop; }
+
+            let current_state = self.state_stack.last_mut().expect("State stack is empty");
+            while let Some(input) = self.window.poll_input() {
+                //current_state.handle_input(input);
             }
 
-            let input = self.window.poll_event();
-            let current_state = self.state_stack.last_mut().expect("State stack is empty");
-
-            current_state.handle_input(input);
             current_state.update();
         }
 
@@ -80,14 +66,9 @@ impl Game {
 mod tests {
     use super::*;
     use window::Headless;
-    use input::InputListener;
 
     struct DummyState;
-
-    impl GameState for DummyState {
-        fn update(&mut self) {}
-    }
-    impl InputListener for DummyState {}
+    impl GameState for DummyState {}
 
     struct IncrementState {
         value: u32
@@ -98,7 +79,6 @@ mod tests {
             self.value += 1;
         }
     }
-    impl InputListener for IncrementState {}
 
     #[test]
     fn new_game() {
