@@ -30,9 +30,9 @@ pub trait Window {
     /// Hides the window from the screen
     fn hide(&mut self);
 
-    /// Polls an event from the window's event loop
-    fn poll_event(&mut self) -> Input;
-    
+    /// Returns the next pending window input
+    fn poll_input(&mut self) -> Option<Input>;
+
     /// Sets the graphic context of the window as the current graphic context
     fn set_current_graphics_context(&self);
     /// Displays the window content
@@ -52,11 +52,7 @@ impl Headless {
 impl Window for Headless {
     fn show(&mut self) {}
     fn hide(&mut self) {}
-
-    fn poll_event(&mut self) -> Input {
-        Input::None
-    }
-
+    fn poll_input(&mut self) -> Option<Input> { None }
     fn set_current_graphics_context(&self) {}
     fn display(&mut self) {}
 }
