@@ -22,8 +22,6 @@
 * SOFTWARE.
 */
 
-use std::collections::HashMap;
-
 pub mod keyboard;
 pub mod mouse;
 

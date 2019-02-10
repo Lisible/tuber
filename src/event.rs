@@ -29,7 +29,7 @@ use std::cell::RefCell;
 use std::any::Any;
 use game::GameState;
 
-enum Event {
+pub enum Event {
     InputDown(&'static str),
     InputUp(&'static str),
     CloseRequest,
@@ -38,11 +38,11 @@ enum Event {
     Custom(&'static str, Box<Any>),
 }
 
-trait EventListener {
+pub trait EventListener {
     fn on_event(&mut self, event: &Event);
 }
 
-struct EventDispatcher {
+pub struct EventDispatcher {
     listeners: Vec<Rc<RefCell<EventListener>>>
 }
 
@@ -53,11 +53,13 @@ impl EventDispatcher {
         }
     }
 
+    /// Registers an event listener to the dispatcher
     pub fn register_listener(&mut self,
                              listener: Rc<RefCell<EventListener>>) {
         self.listeners.push(listener);
     }
 
+    /// Dispatches an event to all the listeners
     pub fn dispatch(&mut self, event: Event) {
         self.listeners
             .iter_mut()

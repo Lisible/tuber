@@ -23,7 +23,6 @@
 */
 
 use window::Window;
-use input::Input;
 
 pub trait GameState {
     fn initialize(&mut self){}
@@ -51,7 +50,7 @@ impl Game {
             if self.state_stack.is_empty() { break 'main_loop; }
 
             let current_state = self.state_stack.last_mut().expect("State stack is empty");
-            while let Some(input) = self.window.poll_input() {
+            while let Some(_input) = self.window.poll_input() {
                 //current_state.handle_input(input);
             }
 
