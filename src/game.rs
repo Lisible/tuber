@@ -69,6 +69,7 @@ mod tests {
 
     struct DummyState;
     impl GameState for DummyState {}
+    impl EventListener for DummyState {}
 
     struct IncrementState {
         value: u32,
@@ -79,6 +80,7 @@ mod tests {
             self.value += 1;
         }
     }
+    impl EventListener for IncrementState {}
 
     #[test]
     fn new_game() {

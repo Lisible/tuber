@@ -39,7 +39,7 @@ pub enum Event {
 }
 
 pub trait EventListener {
-    fn on_event(&mut self, event: &Event);
+    fn on_event(&mut self, _event: &Event){}
 }
 
 pub struct EventDispatcher {
@@ -70,6 +70,7 @@ impl EventDispatcher {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use input::keyboard::Key;
 
     struct A {
         a: i32
@@ -78,8 +79,8 @@ mod tests {
     impl EventListener for A {
         fn on_event(&mut self, e: &Event) {
             match *e {
-                Event::InputDown("inc") => self.a += 1,
-                Event::InputDown("dec") => self.a -= 1,
+                Event::Input(Input::KeyDown(_)) => self.a += 1,
+                Event::Input(Input::KeyUp(_)) => self.a -= 1,
                 _ => {}
             }
         }
@@ -104,9 +105,9 @@ mod tests {
         dispatcher.register_listener(a1.clone());
         dispatcher.register_listener(a2.clone());
 
-        dispatcher.dispatch(Event::InputDown("inc"));
-        dispatcher.dispatch(Event::InputDown("inc"));
-        dispatcher.dispatch(Event::InputDown("inc"));
+        dispatcher.dispatch(Event::Input(Input::KeyDown(Key::A)));
+        dispatcher.dispatch(Event::Input(Input::KeyDown(Key::A)));
+        dispatcher.dispatch(Event::Input(Input::KeyDown(Key::A)));
 
         assert_eq!(a1.borrow().a, 3);
         assert_eq!(a2.borrow().a, 3);
