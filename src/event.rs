@@ -28,10 +28,10 @@ use std::cell::RefCell;
 
 use std::any::Any;
 use game::GameState;
+use input::Input;
 
 pub enum Event {
-    InputDown(&'static str),
-    InputUp(&'static str),
+    Input(Input),
     CloseRequest,
     PushStateRequest(Box<GameState>),
     PopStateRequest,

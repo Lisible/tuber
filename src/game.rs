@@ -23,10 +23,11 @@
 */
 
 use window::Window;
+use event::{EventListener, Event};
 
-pub trait GameState {
-    fn initialize(&mut self){}
-    fn update(&mut self){}
+pub trait GameState: EventListener {
+    fn initialize(&mut self) {}
+    fn update(&mut self) {}
 }
 
 pub struct Game {
@@ -37,7 +38,7 @@ pub struct Game {
 impl Game {
     pub fn new(initial_state: Box<dyn GameState>, window: Box<dyn Window>) -> Game {
         Game {
-            state_stack: vec!(initial_state),
+            state_stack: vec![initial_state],
             window,
         }
     }
@@ -45,18 +46,18 @@ impl Game {
     /// Starts the main loop of the game
     pub fn run(&mut self) {
         println!("Game started");
-
         'main_loop: loop {
-            if self.state_stack.is_empty() { break 'main_loop; }
+            if self.state_stack.is_empty() {
+                break 'main_loop;
+            }
 
             let current_state = self.state_stack.last_mut().expect("State stack is empty");
-            while let Some(_input) = self.window.poll_input() {
-                //current_state.handle_input(input);
+            while let Some(input) = self.window.poll_input() {
+                current_state.on_event(&Event::Input(input));
             }
 
             current_state.update();
         }
-
         println!("Game stopped");
     }
 }
@@ -70,7 +71,7 @@ mod tests {
     impl GameState for DummyState {}
 
     struct IncrementState {
-        value: u32
+        value: u32,
     }
 
     impl GameState for IncrementState {
