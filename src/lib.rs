@@ -22,7 +22,5 @@
 * SOFTWARE.
 */
 
-pub mod game;
 pub mod window;
 pub mod input;
-pub mod event;

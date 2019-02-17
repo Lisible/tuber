@@ -22,37 +22,24 @@
 * SOFTWARE.
 */
 
-use input::Input;
+use crate::input;
 
 pub trait Window {
-    /// Shows the window on the screen
-    fn show(&mut self);
-    /// Hides the window from the screen
-    fn hide(&mut self);
-
-    /// Returns the next pending window input
-    fn poll_input(&mut self) -> Option<Input>;
-
-    /// Sets the graphic context of the window as the current graphic context
-    fn set_current_graphics_context(&self);
-    /// Displays the window content
-    fn display(&mut self);
+    /// Polls a pending event from the window's event queue
+    ///
+    /// If there is no pending event, returns [`None`]
+    ///
+    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    fn poll_event(&mut self) -> Option<WindowEvent>;
 }
 
-/// Used to create applications that doesn't use a window
-/// Especially useful for tests
-pub struct Headless;
-
-impl Headless {
-    pub fn new() -> Headless {
-        Headless {}
-    }
-}
-
-impl Window for Headless {
-    fn show(&mut self) {}
-    fn hide(&mut self) {}
-    fn poll_input(&mut self) -> Option<Input> { None }
-    fn set_current_graphics_context(&self) {}
-    fn display(&mut self) {}
+pub enum WindowEvent {
+    /// Event triggered on a window close request
+    Close,
+    /// Event triggered on key pressed
+    KeyDown(input::keyboard::Key),
+    /// Event triggered on key released
+    KeyUp(input::keyboard::Key),
+    /// Event triggered when an unknown event occurs
+    Unknown
 }
