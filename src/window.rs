@@ -31,6 +31,9 @@ pub trait Window {
     ///
     /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
     fn poll_event(&mut self) -> Option<WindowEvent>;
+
+    /// Displays the content of the window
+    fn display(&mut self);
 }
 
 pub enum WindowEvent {
