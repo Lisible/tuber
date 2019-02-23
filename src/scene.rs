@@ -34,8 +34,13 @@ impl SceneGraph {
         }
     }
 
-    /// Returns the root of the scene graph
-    pub fn root(&mut self) -> &mut SceneNode {
+    /// Returns a reference to the root of the scene graph
+    pub fn root(&mut self) -> &SceneNode {
+        &self.root_node
+    }
+
+    /// Returns a mutable reference to the root of the scene graph
+    pub fn root_mut(&mut self) -> &mut SceneNode {
         &mut self.root_node
     }
 }
@@ -79,39 +84,37 @@ impl SceneNode {
     pub fn children(&self) -> &Vec<SceneNode> {
         &self.children
     }
-    
+    /// Returns the children of the node mutably
+    pub fn children_mut(&mut self) -> &mut Vec<SceneNode> {
+        &mut self.children
+    }
 
     /// Finds a successor in the tree using an identifier
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use tuber::scene::{SceneNode, NodeValue};
-    ///
-    /// let mut root = SceneNode::new("root", NodeValue::AbstractNode);
-    /// let mut a = SceneNode::new("a", NodeValue::AbstractNode);
-    /// let b = SceneNode::new("b", NodeValue::AbstractNode);
-    /// let c = SceneNode::new("c", NodeValue::AbstractNode);
-    /// 
-    /// a.add_child(c);
-    /// root.add_child(a);
-    /// root.add_child(b);
-    ///
-    ///
-    /// if let None = root.find("c") {
-    ///     assert!(false)
-    /// }
-    ///
-    /// if let None = root.find("a").unwrap().find("c") {
-    ///     assert!(false)
-    /// }
-    ///
-    /// if let Some(_) = root.find("d") {
-    ///     assert!(false)
-    /// }
-    ///
-    /// ```
-    pub fn find(&mut self, identifier: &'static str) -> Option<&mut SceneNode> {
+    pub fn find(&self, identifier: &'static str) -> Option<&SceneNode> {
+        use std::collections::HashSet;
+
+        let mut stack = vec!(self);
+        let mut visited = HashSet::new();
+
+        while stack.len() != 0 {
+            if let Some(vertex) = stack.pop() {
+                if vertex.identifier == identifier {
+                    return Some(vertex);
+                }
+
+                if !visited.contains(vertex.identifier) {
+                    visited.insert(vertex.identifier);
+                    for child in &vertex.children {
+                        stack.push(child);
+                    }
+                }
+            }
+        }
+
+        None
+    }
+    /// Finds a successor in the tree using an identifier 
+    pub fn find_mut(&mut self, identifier: &'static str) -> Option<&mut SceneNode> {
         use std::collections::HashSet;
 
         let mut stack: Vec<&mut SceneNode> = vec!(self);
@@ -171,7 +174,7 @@ mod tests {
             assert!(false);
         }
 
-        root.find("b").unwrap().add_child(SceneNode::new("c", NodeValue::AbstractNode));
+        root.find_mut("b").unwrap().add_child(SceneNode::new("c", NodeValue::AbstractNode));
 
         if let None = root.find("c") {
             assert!(false);
