@@ -35,7 +35,7 @@ impl SceneGraph {
     }
 
     /// Returns the root of the scene graph
-    pub fn root(&self) -> &Box<SceneNode> {
+    pub fn root(&self) -> &SceneNode {
         &self.root_node
     }
 }
