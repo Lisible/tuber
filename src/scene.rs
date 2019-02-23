@@ -35,7 +35,7 @@ impl SceneGraph {
     }
 
     /// Returns a reference to the root of the scene graph
-    pub fn root(&mut self) -> &SceneNode {
+    pub fn root(&self) -> &SceneNode {
         &self.root_node
     }
 
@@ -146,7 +146,7 @@ mod tests {
 
     #[test]
     fn scene_graph_new() {
-        let mut scene_graph = SceneGraph::new();
+        let scene_graph = SceneGraph::new();
         let root = scene_graph.root();
 
         match root.value() {
