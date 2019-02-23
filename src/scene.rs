@@ -76,8 +76,8 @@ impl SceneNode {
     }
 
     /// Returns the children of the node
-    pub fn children(&mut self) -> &mut Vec<SceneNode> {
-        &mut self.children
+    pub fn children(&self) -> &Vec<SceneNode> {
+        &self.children
     }
     
 
