@@ -27,10 +27,16 @@ pub struct SceneGraph {
 }
 
 impl SceneGraph {
+    /// Creates a scene graph with a abstract root
     pub fn new() -> SceneGraph {
         SceneGraph {
             root_node: Box::new(SceneNode::new("root", NodeValue::AbstractNode))
         }
+    }
+
+    /// Returns the root of the scene graph
+    pub fn root(&self) -> &Box<SceneNode> {
+        &self.root_node
     }
 }
 
