@@ -35,8 +35,8 @@ impl SceneGraph {
     }
 
     /// Returns the root of the scene graph
-    pub fn root(&self) -> &SceneNode {
-        &self.root_node
+    pub fn root(&mut self) -> &mut SceneNode {
+        &mut self.root_node
     }
 }
 
@@ -98,26 +98,23 @@ impl SceneNode {
     /// root.add_child(b);
     ///
     ///
-    /// match root.find("c") {
-    ///     Some(..) => assert!(true),
-    ///     _ => assert!(false)
+    /// if let None = root.find("c") {
+    ///     assert!(false)
     /// }
     ///
-    /// match root.find("a").unwrap().find("c") {
-    ///     Some(..) => assert!(true),
-    ///     _ => assert!(false)
+    /// if let None = root.find("a").unwrap().find("c") {
+    ///     assert!(false)
     /// }
     ///
-    /// match root.find("d") {
-    ///     None => assert!(true),
-    ///     _ => assert!(false)
+    /// if let Some(_) = root.find("d") {
+    ///     assert!(false)
     /// }
     ///
     /// ```
-    pub fn find(&self, identifier: &'static str) -> Option<&SceneNode> {
+    pub fn find(&mut self, identifier: &'static str) -> Option<&mut SceneNode> {
         use std::collections::HashSet;
 
-        let mut stack: Vec<&SceneNode> = vec!(self);
+        let mut stack: Vec<&mut SceneNode> = vec!(self);
         let mut visited = HashSet::new();
 
         while stack.len() != 0 {
@@ -129,13 +126,59 @@ impl SceneNode {
 
                 if !visited.contains(vertex.identifier) {
                     visited.insert(vertex.identifier);
-                    for child in &vertex.children {
-                        stack.push(&child);
+                    for child in &mut vertex.children {
+                        stack.push(child);
                     }
                 }
             }
         }
 
         None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn scene_graph_new() {
+        let mut scene_graph = SceneGraph::new();
+        let root = scene_graph.root();
+
+        match root.value() {
+            NodeValue::AbstractNode => assert!(true),
+            _ => assert!(false)
+        }
+    }
+
+    #[test]
+    fn scene_node_add_child() {
+        let mut root = SceneNode::new("root", NodeValue::AbstractNode);
+        root.add_child(SceneNode::new("a", NodeValue::AbstractNode));
+        root.add_child(SceneNode::new("b", NodeValue::AbstractNode));
+        
+        assert_eq!(root.children.len(), 2);
+    }
+
+    #[test]
+    fn scene_node_find() {
+        let mut root = SceneNode::new("root", NodeValue::AbstractNode);
+        root.add_child(SceneNode::new("a", NodeValue::AbstractNode));
+        root.add_child(SceneNode::new("b", NodeValue::AbstractNode));
+       
+        if let None = root.find("a") {
+            assert!(false);
+        }
+
+        root.find("b").unwrap().add_child(SceneNode::new("c", NodeValue::AbstractNode));
+
+        if let None = root.find("c") {
+            assert!(false);
+        }
+
+        if let None = root.find("b").unwrap().find("c") {
+            assert!(false);
+        }
     }
 }
