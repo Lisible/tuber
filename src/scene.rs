@@ -42,6 +42,7 @@ impl SceneGraph {
 
 pub enum NodeValue {
     AbstractNode,
+    OpenGLTriangleNode,
 }
 
 pub struct SceneNode {
