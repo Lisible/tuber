@@ -43,10 +43,11 @@ impl LowLevelRenderer {
 
         shader_program.use_shader();
 
-        LowLevelRenderer { shader_program }
+        LowLevelRenderer {
+            shader_program
+        }
     }
 
     pub fn render_triangle(&mut self) {
-        println!("Render triangle");
     }
 }
