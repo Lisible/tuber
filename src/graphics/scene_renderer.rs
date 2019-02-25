@@ -1,7 +1,7 @@
 /*
 * MIT License
 *
-* Copyright (c) 2018 Clément SIBILLE
+* Copyright (c) 2018-2019 Clément SIBILLE
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,8 @@
 * SOFTWARE.
 */
 
-pub mod graphics;
-pub mod window;
-pub mod input;
-pub mod scene;
+use crate::scene::SceneGraph;
 
-pub mod platform;
+pub trait SceneRenderer {
+    fn render_scene(&mut self, scene: &SceneGraph);
+}

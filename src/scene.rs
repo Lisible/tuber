@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+use crate::graphics::rectangle::Rectangle;
+
 pub struct SceneGraph {
     root_node: Box<SceneNode>
 }
@@ -47,13 +49,13 @@ impl SceneGraph {
 
 pub enum NodeValue {
     AbstractNode,
-    OpenGLTriangleNode,
+    RectangleNode(Rectangle),
 }
 
 pub struct SceneNode {
     identifier: &'static str,
     value: NodeValue,
-    children: Vec<SceneNode>
+    children: Vec<SceneNode>,
 }
 
 impl SceneNode {
