@@ -5,3 +5,4 @@ authors = ["Clément SIBILLE <claymeuns@protonmail.com>"]
 edition = "2018"
 
 [dependencies]
+gl = "0.11.0"

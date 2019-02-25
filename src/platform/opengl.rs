@@ -22,5 +22,6 @@
 * SOFTWARE.
 */
 
+pub mod shader;
 pub mod scene_renderer;
 pub mod low_level_renderer;

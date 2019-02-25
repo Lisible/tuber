@@ -22,7 +22,7 @@
 * SOFTWARE.
 */
 
-use crate::scene::{SceneNode, SceneGraph, NodeValue};
+use crate::scene::SceneGraph;
 use crate::graphics::scene_renderer;
 use crate::platform::opengl::low_level_renderer::LowLevelRenderer;
 
