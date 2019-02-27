@@ -23,7 +23,7 @@
 */
 
 pub type Point = (f32, f32, f32);
-pub type Color = (u8, u8, u8, f32);
+pub type Color = (f32, f32, f32, f32);
 
 pub trait Polygon {
     /// Returns the points of the polygon
@@ -46,7 +46,7 @@ impl Rectangle {
         Rectangle {
             width,
             height,
-            color: (255, 255, 255, 1.0)
+            color: (1.0, 1.0, 1.0, 1.0)
         }
     }
 
