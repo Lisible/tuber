@@ -154,11 +154,6 @@ impl SceneNode {
     }
 }
 
-pub trait SceneRenderer {
-    /// Renders a scene graph
-    fn render_scene(&mut self, scene: &SceneGraph);
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
