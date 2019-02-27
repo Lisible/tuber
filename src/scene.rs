@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-use crate::graphics::rectangle::Rectangle;
+use crate::graphics::Polygon;
 
 pub struct SceneGraph {
     root_node: Box<SceneNode>
@@ -49,12 +49,14 @@ impl SceneGraph {
 
 pub enum NodeValue {
     AbstractNode,
-    RectangleNode(Rectangle),
+    TextNode(String),
+    PolygonNode(Box<Polygon>),
 }
 
 pub struct SceneNode {
     identifier: &'static str,
     value: NodeValue,
+    transform: glm::Mat4,
     children: Vec<SceneNode>,
 }
 
@@ -63,6 +65,7 @@ impl SceneNode {
         SceneNode {
             identifier,
             value,
+            transform: glm::identity(),
             children: vec!()
         }
     }
@@ -80,6 +83,15 @@ impl SceneNode {
     /// Returns the value of the node
     pub fn value(&self) -> &NodeValue {
         &self.value
+    }
+
+    /// Sets the transform of a node
+    pub fn set_transform(&mut self, transform: glm::Mat4) {
+        self.transform = transform;
+    }
+    /// Returns the transform of the node
+    pub fn transform(&self) -> &glm::Mat4 {
+        &self.transform
     }
 
     /// Returns the children of the node
@@ -140,6 +152,11 @@ impl SceneNode {
 
         None
     }
+}
+
+pub trait SceneRenderer {
+    /// Renders a scene graph
+    fn render_scene(&mut self, scene: &SceneGraph);
 }
 
 #[cfg(test)]

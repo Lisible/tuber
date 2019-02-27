@@ -1,7 +1,7 @@
 /*
 * MIT License
 *
-* Copyright (c) 2019 Clément SIBILLE
+* Copyright (c) 2018-2019 Clément SIBILLE
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,5 +22,60 @@
 * SOFTWARE.
 */
 
-pub mod rectangle;
-pub mod scene_renderer;
+pub type Point = (f32, f32);
+pub type Color = (u8, u8, u8, f32);
+
+pub trait Polygon {
+    /// Returns the points of the polygon
+    fn points(&self) -> Vec<Point>;
+
+    /// Sets the color of the polygon
+    fn set_color(&mut self, color: Color);
+    /// Returns the color of the polygon
+    fn color(&self) -> Color; 
+}
+
+pub struct Rectangle {
+    width: f32,
+    height: f32,
+    color: Color
+}
+
+impl Rectangle {
+    pub fn new(width: f32, height: f32) -> Rectangle {
+        Rectangle {
+            width,
+            height,
+            color: (255, 255, 255, 1.0)
+        }
+    }
+
+    /// Returns the width of the rectangle
+    pub fn width(&self) -> f32 {
+        self.width
+    }
+    /// Returns the height of the rectangle
+    pub fn height(&self) -> f32 {
+        self.height
+    }
+    /// Returns the size (width, height) of the rectangle
+    pub fn size(&self) -> (f32, f32) {
+        (self.width, self.height)
+    } 
+}
+
+impl Polygon for Rectangle {
+    fn points(&self) -> Vec<Point> {
+        vec![
+            (0.0, 0.0), (self.width, 0.0),
+            (0.0, self.height), (self.width, self.height)
+        ]
+    }
+
+    fn set_color(&mut self, color: Color) {
+        self.color = color;
+    }
+    fn color(&self) -> Color {
+        self.color
+    }
+}
