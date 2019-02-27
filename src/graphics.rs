@@ -22,7 +22,7 @@
 * SOFTWARE.
 */
 
-pub type Point = (f32, f32);
+pub type Point = (f32, f32, f32);
 pub type Color = (u8, u8, u8, f32);
 
 pub trait Polygon {
@@ -67,8 +67,8 @@ impl Rectangle {
 impl Polygon for Rectangle {
     fn points(&self) -> Vec<Point> {
         vec![
-            (0.0, 0.0), (self.width, 0.0),
-            (0.0, self.height), (self.width, self.height)
+            (0.0, 0.0, 0.0), (self.width, 0.0, 0.0),
+            (0.0, self.height, 0.0), (self.width, self.height, 0.0)
         ]
     }
 
