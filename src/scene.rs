@@ -96,6 +96,15 @@ impl SceneNode {
         &self.transform
     }
 
+    /// Sets the material of the node
+    pub fn set_material(&mut self, material: &'static str) {
+        self.material = material;
+    }
+    /// Returns the material of the node
+    pub fn material(&self) -> &'static str {
+        self.material
+    }
+
     /// Returns the children of the node
     pub fn children(&self) -> &Vec<SceneNode> {
         &self.children
