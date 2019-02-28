@@ -56,6 +56,7 @@ pub enum NodeValue {
 pub struct SceneNode {
     identifier: &'static str,
     value: NodeValue,
+    material: &'static str,
     transform: glm::Mat4,
     children: Vec<SceneNode>,
 }
@@ -65,6 +66,7 @@ impl SceneNode {
         SceneNode {
             identifier,
             value,
+            material: "default",
             transform: glm::identity(),
             children: vec!()
         }
