@@ -22,7 +22,10 @@
 * SOFTWARE.
 */
 
+extern crate nalgebra_glm as glm;
+
 pub mod window;
 pub mod input;
 pub mod scene;
 pub mod resources;
+pub mod graphics;
