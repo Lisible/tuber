@@ -35,7 +35,7 @@ pub trait ResourceHandler<T> {
 
 pub trait ResourceLoader<T> {
     /// Loads a resource using the given identifier
-    fn load(&self, identifier: &'static str) -> T;
+    fn load(identifier: &'static str) -> Result<T, String>;
 }
 
 pub trait ResourceStore<T> {
