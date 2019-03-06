@@ -22,17 +22,6 @@
 * SOFTWARE.
 */
 
-pub trait ResourceHandler<T> {
-    /// Loads a resource
-    fn load(resource_identifier: &'static str);
-    /// Unloads the resource
-    fn unload(resource_identifier: &'static str);
-    /// Returns a ref to the resource
-    fn get(resource_identifier: &'static str) -> &T; 
-    /// Returns a mut ref to the resource
-    fn get_mut(resource_identifier: &'static str) -> &mut T; 
-}
-
 pub trait ResourceLoader<T> {
     /// Loads a resource using the given identifier
     fn load(identifier: &'static str) -> Result<T, String>;
@@ -40,7 +29,7 @@ pub trait ResourceLoader<T> {
 
 pub trait ResourceStore<T> {
     /// Adds a resource to the ResourceStore
-    fn add(&mut self, identifier: &'static str, value: T);
+    fn store(&mut self, identifier: &'static str, value: T);
     /// Removes a resource from the ResourceStore
     fn remove(&mut self, identifier: &'static str);
 
