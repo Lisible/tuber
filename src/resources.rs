@@ -34,7 +34,7 @@ pub trait ResourceStore<T> {
     fn remove(&mut self, identifier: &'static str);
 
     /// Returns a resource as a ref
-    fn get(&mut self, identifier: &'static str) -> &T;
+    fn get(&self, identifier: &'static str) -> Option<&T>;
     /// Returns a resource as a mut ref
-    fn get_mut(&mut self, identifier: &'static str) -> &mut T;
+    fn get_mut(&mut self, identifier: &'static str) -> Option<&mut T>;
 }
