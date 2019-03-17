@@ -22,6 +22,8 @@
 * SOFTWARE.
 */
 
+pub mod scene_renderer;
+
 pub type Point = (f32, f32, f32);
 pub type Color = (f32, f32, f32, f32);
 
