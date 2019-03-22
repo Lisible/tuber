@@ -24,7 +24,7 @@
 
 use crate::scene::SceneGraph;
 
-trait SceneRenderer {
+pub trait SceneRenderer {
     /// Renders the given scene
     fn render_scene(&mut self, scene: SceneGraph);
 }
