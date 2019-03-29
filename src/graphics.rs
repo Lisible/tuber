@@ -27,16 +27,6 @@ pub mod scene_renderer;
 pub type Point = (f32, f32, f32);
 pub type Color = (f32, f32, f32, f32);
 
-pub trait Polygon {
-    /// Returns the points of the polygon
-    fn points(&self) -> Vec<Point>;
-
-    /// Sets the color of the polygon
-    fn set_color(&mut self, color: Color);
-    /// Returns the color of the polygon
-    fn color(&self) -> Color; 
-}
-
 pub struct Rectangle {
     width: f32,
     height: f32,
@@ -64,20 +54,9 @@ impl Rectangle {
     pub fn size(&self) -> (f32, f32) {
         (self.width, self.height)
     } 
-}
 
-impl Polygon for Rectangle {
-    fn points(&self) -> Vec<Point> {
-        vec![
-            (0.0, 0.0, 0.0), (self.width, 0.0, 0.0),
-            (0.0, self.height, 0.0), (self.width, self.height, 0.0)
-        ]
-    }
-
-    fn set_color(&mut self, color: Color) {
-        self.color = color;
-    }
-    fn color(&self) -> Color {
-        self.color
+    /// Returns the color of the rectangle
+    pub fn color(&self) -> &Color {
+        &self.color
     }
 }

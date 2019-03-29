@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-use crate::graphics::Polygon;
+use crate::graphics::Rectangle;
 
 pub struct SceneGraph {
     root_node: Box<SceneNode>
@@ -50,7 +50,7 @@ impl SceneGraph {
 pub enum NodeValue {
     AbstractNode,
     TextNode(String),
-    PolygonNode(Box<Polygon>),
+    RectangleNode(Rectangle),
 }
 
 pub struct SceneNode {
