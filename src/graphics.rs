@@ -27,6 +27,34 @@ pub mod scene_renderer;
 pub type Point = (f32, f32, f32);
 pub type Color = (f32, f32, f32, f32);
 
+/// Struct for sprites
+pub struct Sprite {
+    width: f32,
+    height: f32,
+    texture_identifier: String
+}
+
+impl Sprite {
+    /// Creates a new sprite with the given size and texture
+    pub fn new(width: f32, height: f32, texture_identifier: String) -> Sprite {
+        Sprite {
+            width,
+            height,
+            texture_identifier
+        }
+    }
+
+    pub fn width(&self) -> f32 {
+        self.width
+    }
+    pub fn height(&self) -> f32 {
+        self.height
+    }
+    pub fn texture_identifier(&self) -> &str {
+        &self.texture_identifier
+    }
+}
+
 pub struct Rectangle {
     width: f32,
     height: f32,
