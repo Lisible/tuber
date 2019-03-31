@@ -24,7 +24,7 @@
 
 pub trait ResourceLoader<T> {
     /// Loads a resource using the given resource file path
-    fn load(resource_file_path: &'static str) -> Result<T, String>;
+    fn load(&mut self, resource_file_path: &'static str) -> Result<T, String>;
 }
 
 pub trait ResourceStore<T> {
