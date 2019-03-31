@@ -23,18 +23,18 @@
 */
 
 pub trait ResourceLoader<T> {
-    /// Loads a resource using the given identifier
-    fn load(identifier: &'static str) -> Result<T, String>;
+    /// Loads a resource using the given resource file path
+    fn load(resource_file_path: &'static str) -> Result<T, String>;
 }
 
 pub trait ResourceStore<T> {
     /// Adds a resource to the ResourceStore
-    fn store(&mut self, identifier: &'static str, value: T);
+    fn store(&mut self, resource_file_path: &'static str, value: T);
     /// Removes a resource from the ResourceStore
-    fn remove(&mut self, identifier: &'static str);
+    fn remove(&mut self, resource_file_path: &'static str);
 
     /// Returns a resource as a ref
-    fn get(&self, identifier: &'static str) -> Option<&T>;
+    fn get(&self, resource_file_path: &'static str) -> Option<&T>;
     /// Returns a resource as a mut ref
-    fn get_mut(&mut self, identifier: &'static str) -> Option<&mut T>;
+    fn get_mut(&mut self, resource_file_path: &'static str) -> Option<&mut T>;
 }
