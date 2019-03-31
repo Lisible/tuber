@@ -62,11 +62,11 @@ pub struct Rectangle {
 }
 
 impl Rectangle {
-    pub fn new(width: f32, height: f32) -> Rectangle {
+    pub fn new(width: f32, height: f32, color: Color) -> Rectangle {
         Rectangle {
             width,
             height,
-            color: (1.0, 1.0, 1.0, 1.0)
+            color
         }
     }
 
