@@ -24,17 +24,17 @@
 
 pub trait ResourceLoader<T> {
     /// Loads a resource using the given resource file path
-    fn load(&mut self, resource_file_path: &'static str) -> Result<T, String>;
+    fn load(&mut self, resource_file_path: &str) -> Result<T, String>;
 }
 
 pub trait ResourceStore<T> {
     /// Adds a resource to the ResourceStore
-    fn store(&mut self, resource_file_path: &'static str, value: T);
+    fn store(&mut self, resource_file_path: &str, value: T);
     /// Removes a resource from the ResourceStore
-    fn remove(&mut self, resource_file_path: &'static str);
+    fn remove(&mut self, resource_file_path: &str);
 
     /// Returns a resource as a ref
-    fn get(&self, resource_file_path: &'static str) -> Option<&T>;
+    fn get(&self, resource_file_path: &str) -> Option<&T>;
     /// Returns a resource as a mut ref
-    fn get_mut(&mut self, resource_file_path: &'static str) -> Option<&mut T>;
+    fn get_mut(&mut self, resource_file_path: &str) -> Option<&mut T>;
 }
