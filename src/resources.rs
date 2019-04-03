@@ -29,7 +29,7 @@ pub trait ResourceLoader<T> {
 
 pub trait ResourceStore<T> {
     /// Adds a resource to the ResourceStore
-    fn store(&mut self, resource_file_path: &str, value: T);
+    fn store(&mut self, resource_file_path: String, value: T);
     /// Removes a resource from the ResourceStore
     fn remove(&mut self, resource_file_path: &str);
 
