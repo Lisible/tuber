@@ -55,6 +55,34 @@ impl Sprite {
     }
 }
 
+pub struct Line {
+    first_point: Point,
+    second_point: Point,
+    color: Color
+}
+
+impl Line {
+    pub fn new(first_point: Point, second_point: Point, color: Color) -> Line {
+        Line {
+            first_point,
+            second_point,
+            color
+        }
+    }
+
+    pub fn first_point(&self) -> Point {
+        self.first_point
+    }
+
+    pub fn second_point(&self) -> Point {
+        self.second_point
+    }
+
+    pub fn color(&self) -> Color {
+        self.color
+    }
+}
+
 pub struct Rectangle {
     width: f32,
     height: f32,
