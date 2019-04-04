@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-use crate::graphics::{Rectangle, Sprite};
+use crate::graphics::{Rectangle, Line, Sprite};
 
 pub struct SceneGraph {
     root_node: Box<SceneNode>
@@ -51,6 +51,7 @@ pub enum NodeValue {
     AbstractNode,
     TextNode(String),
     RectangleNode(Rectangle),
+    LineNode(Line),
     SpriteNode(Sprite),
 }
 
