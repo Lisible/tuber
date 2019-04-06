@@ -22,17 +22,17 @@
  * SOFTWARE.
  */
 
-use crate::graphics::{Rectangle, Line, Sprite};
+use crate::graphics::{Line, Rectangle, Sprite, Text};
 
 pub struct SceneGraph {
-    root_node: Box<SceneNode>
+    root_node: Box<SceneNode>,
 }
 
 impl SceneGraph {
     /// Creates a scene graph with a abstract root
     pub fn new() -> SceneGraph {
         SceneGraph {
-            root_node: Box::new(SceneNode::new("root", NodeValue::AbstractNode))
+            root_node: Box::new(SceneNode::new("root", NodeValue::AbstractNode)),
         }
     }
 
@@ -49,7 +49,7 @@ impl SceneGraph {
 
 pub enum NodeValue {
     AbstractNode,
-    TextNode(String),
+    TextNode(Text),
     RectangleNode(Rectangle),
     LineNode(Line),
     SpriteNode(Sprite),
@@ -70,13 +70,13 @@ impl SceneNode {
             value,
             material: "default",
             transform: glm::identity(),
-            children: vec!()
+            children: vec![],
         }
     }
 
     /// Adds a child to the node
     pub fn add_child(&mut self, node: SceneNode) {
-        self.children.push(node); 
+        self.children.push(node);
     }
 
     /// Returns the identifier of the node
@@ -120,7 +120,7 @@ impl SceneNode {
     pub fn find(&self, identifier: &'static str) -> Option<&SceneNode> {
         use std::collections::HashSet;
 
-        let mut stack = vec!(self);
+        let mut stack = vec![self];
         let mut visited = HashSet::new();
 
         while stack.len() != 0 {
@@ -140,16 +140,15 @@ impl SceneNode {
 
         None
     }
-    /// Finds a successor in the tree using an identifier 
+    /// Finds a successor in the tree using an identifier
     pub fn find_mut(&mut self, identifier: &'static str) -> Option<&mut SceneNode> {
         use std::collections::HashSet;
 
-        let mut stack: Vec<&mut SceneNode> = vec!(self);
+        let mut stack: Vec<&mut SceneNode> = vec![self];
         let mut visited = HashSet::new();
 
         while stack.len() != 0 {
             if let Some(vertex) = stack.pop() {
-                
                 if vertex.identifier == identifier {
                     return Some(vertex);
                 }
@@ -178,7 +177,7 @@ mod tests {
 
         match root.value() {
             NodeValue::AbstractNode => assert!(true),
-            _ => assert!(false)
+            _ => assert!(false),
         }
     }
 
@@ -187,7 +186,7 @@ mod tests {
         let mut root = SceneNode::new("root", NodeValue::AbstractNode);
         root.add_child(SceneNode::new("a", NodeValue::AbstractNode));
         root.add_child(SceneNode::new("b", NodeValue::AbstractNode));
-        
+
         assert_eq!(root.children.len(), 2);
     }
 
@@ -196,12 +195,14 @@ mod tests {
         let mut root = SceneNode::new("root", NodeValue::AbstractNode);
         root.add_child(SceneNode::new("a", NodeValue::AbstractNode));
         root.add_child(SceneNode::new("b", NodeValue::AbstractNode));
-       
+
         if let None = root.find("a") {
             assert!(false);
         }
 
-        root.find_mut("b").unwrap().add_child(SceneNode::new("c", NodeValue::AbstractNode));
+        root.find_mut("b")
+            .unwrap()
+            .add_child(SceneNode::new("c", NodeValue::AbstractNode));
 
         if let None = root.find("c") {
             assert!(false);

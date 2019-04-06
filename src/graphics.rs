@@ -27,11 +27,16 @@ pub mod scene_renderer;
 pub type Point = (f32, f32, f32);
 pub type Color = (f32, f32, f32, f32);
 
+/// Struct for text
+pub struct Text {
+    text: String,
+}
+
 /// Struct for sprites
 pub struct Sprite {
     width: f32,
     height: f32,
-    texture_identifier: String
+    texture_identifier: String,
 }
 
 impl Sprite {
@@ -40,7 +45,7 @@ impl Sprite {
         Sprite {
             width,
             height,
-            texture_identifier
+            texture_identifier,
         }
     }
 
@@ -58,7 +63,7 @@ impl Sprite {
 pub struct Line {
     first_point: Point,
     second_point: Point,
-    color: Color
+    color: Color,
 }
 
 impl Line {
@@ -66,7 +71,7 @@ impl Line {
         Line {
             first_point,
             second_point,
-            color
+            color,
         }
     }
 
@@ -86,7 +91,7 @@ impl Line {
 pub struct Rectangle {
     width: f32,
     height: f32,
-    color: Color
+    color: Color,
 }
 
 impl Rectangle {
@@ -94,7 +99,7 @@ impl Rectangle {
         Rectangle {
             width,
             height,
-            color
+            color,
         }
     }
 
@@ -109,7 +114,7 @@ impl Rectangle {
     /// Returns the size (width, height) of the rectangle
     pub fn size(&self) -> (f32, f32) {
         (self.width, self.height)
-    } 
+    }
 
     /// Returns the color of the rectangle
     pub fn color(&self) -> &Color {
