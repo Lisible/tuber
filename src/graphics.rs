@@ -30,6 +30,25 @@ pub type Color = (f32, f32, f32, f32);
 /// Struct for text
 pub struct Text {
     text: String,
+    font_identifier: String,
+}
+
+impl Text {
+    /// Creates a new text
+    pub fn new(text: String, font_identifier: String) -> Text {
+        Text {
+            text,
+            font_identifier,
+        }
+    }
+
+    pub fn text(&self) -> &str {
+        &self.text
+    }
+
+    pub fn font_identifier(&self) -> &str {
+        &self.font_identifier
+    }
 }
 
 /// Struct for sprites
